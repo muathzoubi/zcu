@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChevronLeft, Facebook, Instagram, Twitter } from 'lucide-react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useCallback } from 'react'
-
+import '@/styles/globals.css'
 export default function ArabicLandingPage() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
 
@@ -21,17 +21,16 @@ export default function ArabicLandingPage() {
 
   return (
     <div dir="rtl" className="flex flex-col min-h-screen">
-      <header className="bg-[#002B5C] text-white fixed w-full z-10">
+      <header className="bg text-white fixed w-full z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2 space-x-reverse">
             <Image
-              src="/placeholder.svg?height=40&width=40"
+              src="/big-logo.png?height=40&width=40"
               alt="شعار كوبكو"
               width={40}
               height={40}
               className="w-10 h-10"
             />
-            <span className="text-2xl font-bold">كوبكو</span>
           </div>
           <nav className="hidden md:flex space-x-4 space-x-reverse">
             <Link href="#products" className="hover:text-[#FF9E1B] transition-colors">المنتجات</Link>
@@ -48,16 +47,15 @@ export default function ArabicLandingPage() {
         <div className="embla overflow-hidden" ref={emblaRef}>
           <div className="embla__container flex">
             {[
-              { title: "دواجن طازجة، توصيل يومي", description: "أجود منتجات الدواجن من كوبكو", image: "/placeholder.svg?height=600&width=1200&text=صورة+1" },
-              { title: "جودة عالية منذ 1974", description: "ضمان الأمن الغذائي والتميز", image: "/placeholder.svg?height=600&width=1200&text=صورة+2" },
-              { title: "منتجات متنوعة لتلبية احتياجاتك", description: "من الدجاج الكامل إلى القطع المختارة", image: "/placeholder.svg?height=600&width=1200&text=صورة+3" },
+              { title: "دواجن طازجة، توصيل يومي", description: "أجود منتجات الدواجن من كوبكو", image: "/01.jpg" },
+              { title: "جودة عالية منذ 1974", description: "ضمان الأمن الغذائي والتميز", image: "/02.jpg" },
+              { title: "منتجات متنوعة لتلبية احتياجاتك", description: "من الدجاج الكامل إلى القطع المختارة", image: "/04.jpg" },
             ].map((slide, index) => (
               <div key={index} className="embla__slide flex-[0_0_100%] min-w-0 relative h-[calc(100vh-4rem)]">
-                <Image
+                <img
                   src={slide.image}
                   alt={slide.title}
-                  fill
-                  className="object-cover"
+                  className="h-full w-264 "
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                   <div className="text-center text-white p-4">
