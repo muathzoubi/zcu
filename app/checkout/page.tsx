@@ -6,7 +6,6 @@ import { Navbar } from "@/components/ui/navbar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { label } from "@/components/ui/label"
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 const products = [
