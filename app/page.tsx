@@ -32,15 +32,15 @@ export default function ArabicLandingPage() {
   }, [])
   return (
     <div dir="rtl" className="flex flex-col min-h-screen">
-      <header className="bg text-white fixed w-full z-10">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <header className="bg-black bg-opacity-50 text-white fixed w-full z-10">
+        <div className="container mx-auto px-4  flex items-center justify-between">
           <div className="flex items-center space-x-2 space-x-reverse">
             <Image
               src="/big-logo.png?height=40&width=40"
               alt="شعار المتحدة"
               width={40}
               height={90}
-              className="w-10 h-20"
+              
             />
           </div>
           <nav className="hidden md:flex space-x-4 space-x-reverse">
