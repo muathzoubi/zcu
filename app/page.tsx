@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChevronLeft, Facebook, Instagram, Twitter } from 'lucide-react'
 import useEmblaCarousel from 'embla-carousel-react'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import '@/styles/globals.css'
 export default function ArabicLandingPage() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
@@ -18,7 +18,18 @@ export default function ArabicLandingPage() {
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext()
   }, [emblaApi])
-
+  useEffect(() => {
+    fetch('/api/increment-visitor', { method: 'POST' })
+      .then(response => response.json())
+      .then(data => {
+        if (!data.success) {
+          console.error('Failed to increment visitor count')
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }, [])
   return (
     <div dir="rtl" className="flex flex-col min-h-screen">
       <header className="bg text-white fixed w-full z-10">
@@ -26,10 +37,10 @@ export default function ArabicLandingPage() {
           <div className="flex items-center space-x-2 space-x-reverse">
             <Image
               src="/big-logo.png?height=40&width=40"
-              alt="شعار كوبكو"
+              alt="شعار المتحدة"
               width={40}
-              height={40}
-              className="w-10 h-10"
+              height={90}
+              className="w-10 h-20"
             />
           </div>
           <nav className="hidden md:flex space-x-4 space-x-reverse">
@@ -43,27 +54,24 @@ export default function ArabicLandingPage() {
         </div>
       </header>
 
-      <main className="flex-grow pt-16">
-        <div className="embla overflow-hidden" ref={emblaRef}>
+      <main className="flex-grow pt-16" style={{background:'url(/02.jpg)no-repeat',  backgroundPosition:" top center"}}>
+        <div className="embla overflow-hidden" ref={emblaRef} >
           <div className="embla__container flex">
             {[
-              { title: "دواجن طازجة، توصيل يومي", description: "أجود منتجات الدواجن من كوبكو", image: "/01.jpg" },
+              { title: "دواجن طازجة، توصيل يومي", description: "أجود منتجات الدواجن من المتحدة", image: "/01.jpg" },
               { title: "جودة عالية منذ 1974", description: "ضمان الأمن الغذائي والتميز", image: "/02.jpg" },
               { title: "منتجات متنوعة لتلبية احتياجاتك", description: "من الدجاج الكامل إلى القطع المختارة", image: "/04.jpg" },
             ].map((slide, index) => (
               <div key={index} className="embla__slide flex-[0_0_100%] min-w-0 relative h-[calc(100vh-4rem)]">
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className="h-full w-264 "
-                />
+              
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                   <div className="text-center text-white p-4">
                     <h2 className="text-4xl md:text-6xl font-bold mb-4">{slide.title}</h2>
                     <p className="text-xl md:text-2xl mb-8">{slide.description}</p>
-                    <Button className="bg-[#FF9E1B] hover:bg-[#e88c0d] text-white text-lg px-8 py-3">
+                   <Link href={'/proudcts'}> <Button className="bg-[#FF9E1B] hover:bg-[#e88c0d] text-white text-lg px-8 py-3">
                       استكشف منتجاتنا
                     </Button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -82,20 +90,28 @@ export default function ArabicLandingPage() {
             &#x276F;
           </Button>
         </div>
-
-        <section id="products" className="py-20">
+<section className="py-20"style={{background:'url(/01.jpg)no-repeat',  backgroundPosition:" top center"}}>
+<div className="container mx-auto px-4">
+  <h2 className="text-3xl font-bold text-center text-orange-400 mb-12">الشركة الكويتية المتحدة للدواجن</h2>
+    
+<p className="text-white">
+74 صدر مرسوم أميري بتأسيس الشركة الكويتية المتحدة للدواجن وحدد أغراضها بتوفير وتأمين واستدامة الأمن الغذائي لدولة الكويت في قطاع الدواجن والأعلاف وأدرجت الشركة في سوق الكويت للأوراق المالية (البورصة) عام 1976. وبذلك أصبحت من أولى المشاريع المتكاملة في مجال الدواجن والأعلاف بدولة الكويت ودول الخليج العربي وقد حافظت (المتحدة) دائما على مستويات عالية من الجودة في مختلف منتجاتها وذلك من خلال التزامها بشروط سلامة الغذاء واستخدام الأعلاف الطبيعية النباتية 100% مما ساهم في تمكينها من نيل ثقة المستهلك التي يترتب عليها مسئولية إضافية تعتز بها الشركة دائماً.
+</p>
+</div>
+</section>
+        <section id="products" className="py-20 bg-orange-300" >
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center text-[#002B5C] mb-12">منتجاتنا الممتازة</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { name: "دجاج كامل طازج", description: "دجاج كامل طازج من المزرعة ومصادر محلية" },
-                { name: "صدور الدجاج", description: "صدور دجاج قليلة الدهون وغنية بالبروتين" },
-                { name: "قطع الدجاج", description: "تشكيلة متنوعة من قطع الدجاج لتلبية جميع احتياجاتك الطهوية" },
+                { name: "المنتجات الطازجة", description: "دجاج كامل طازج من المزرعة ومصادر محلية" },
+                { name: "المنتجات المجمدة", description: "صدور دجاج قليلة الدهون وغنية بالبروتين" },
+                { name: "البيض الطازج", description: "تشكيلة من بيض الدجاج لتلبية جميع احتياجاتك " },
               ].map((product, index) => (
                 <Card key={index} className="hover:shadow-lg transition-shadow">
                   <CardHeader>
-                    <Image
-                      src={`/placeholder.svg?height=200&width=300&text=${product.name}`}
+                    <img
+                      src={`/${index}.jpg`}
                       alt={product.name}
                       width={300}
                       height={200}
@@ -106,6 +122,8 @@ export default function ArabicLandingPage() {
                     <CardTitle className="mb-2">{product.name}</CardTitle>
                     <p className="text-gray-600">{product.description}</p>
                   </CardContent>
+                 <Link href={'/proudcts'}> <Button className="bg-orange-400 m-4">مشاهدة جميع المنتجات</Button></Link>
+
                 </Card>
               ))}
             </div>
@@ -116,18 +134,18 @@ export default function ArabicLandingPage() {
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row-reverse items-center">
               <div className="md:w-1/2 mb-8 md:mb-0 md:pr-12">
-                <Image
-                  src="/placeholder.svg?height=400&width=600&text=منشأة+كوبكو"
-                  alt="منشأة كوبكو"
+                <img
+                  src="/22.jpg"
+                  alt="منشأة المتحدة"
                   width={600}
                   height={400}
                   className="rounded-lg shadow-md"
                 />
               </div>
               <div className="md:w-1/2">
-                <h2 className="text-3xl font-bold text-[#002B5C] mb-6">عن كوبكو</h2>
+                <h2 className="text-3xl font-bold text-[#002B5C] mb-6">عن المتحدة</h2>
                 <p className="text-gray-600 mb-6">
-                  الشركة الكويتية المتحدة للدواجن (كوبكو) هي رائدة في صناعة الدواجن منذ عام 1974. نحن ملتزمون بتقديم منتجات دواجن عالية الجودة مع ضمان الأمن الغذائي للكويت ومنطقة الخليج.
+                  الشركة الكويتية المتحدة للدواجن (المتحدة) هي رائدة في صناعة الدواجن منذ عام 1974. نحن ملتزمون بتقديم منتجات دواجن عالية الجودة مع ضمان الأمن الغذائي للكويت ومنطقة الخليج.
                 </p>
                 <ul className="space-y-2 mb-6">
                   {[
@@ -172,7 +190,7 @@ export default function ArabicLandingPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-lg font-semibold mb-4">كوبكو</h3>
+              <h3 className="text-lg font-semibold mb-4">المتحدة</h3>
               <p className="text-sm">نقدم منتجات دواجن عالية الجودة منذ عام 1974</p>
             </div>
             <div>

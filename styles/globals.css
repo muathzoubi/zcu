@@ -8,8 +8,11 @@
 
 }
 @layer base {
-  .cover{
-    background-size: cover;
+body{
+    background:url(/01.jpg) no-repeat;
+    background-size: contain;
+    background-position: center top;
+
   }
   :root {
     --background: 0 0% 100%;
