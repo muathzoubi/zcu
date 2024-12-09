@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Next.js",
+  name: "المتحدة للدواجن",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "الشركة الكويتية المتحدة للدواجن, الشركة الكويتية المتحدة للدواجن (المتحدة) هي رائدة في صناعة الدواجن منذ عام 1974. نحن ملتزمون بتقديم منتجات دواجن عالية الجودة مع ضمان الأمن الغذائي للكويت ومنطقة الخليج.    ",
   mainNav: [
     {
       title: "Home",

