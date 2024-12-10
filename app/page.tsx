@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChevronLeft, Facebook, Instagram, Twitter } from 'lucide-react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useCallback, useEffect } from 'react'
+import { LiveChatWidget} from '@livechat/widget-react'
 import '@/styles/globals.css'
 export default function ArabicLandingPage() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
@@ -231,6 +232,7 @@ export default function ArabicLandingPage() {
           </div>
         </div>
       </footer>
+      <LiveChatWidget license="18935082"/>
     </div>
   )
 }
