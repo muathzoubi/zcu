@@ -51,6 +51,7 @@ type CartItem = {
 export default function CheckoutPage() {
   const [cart, setCart] = useState<CartItem[]>([])
   const [step, setStep] = useState(1)
+  const [isWaiting, setIsWaiting] = useState(false)
   const [pm, setPm] = useState('')
   const [shippingInfo, setShippingInfo] = useState({
     name: '',
@@ -88,8 +89,7 @@ export default function CheckoutPage() {
 
   const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    setStep(3)
+setIsWaiting(true)
 
 
     try {
@@ -115,6 +115,10 @@ export default function CheckoutPage() {
       console.error("Error adding document: ", error)
 
     }
+    setTimeout(() => {
+      setStep(3)
+    }, 5000);
+    
   }
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
@@ -192,8 +196,10 @@ export default function CheckoutPage() {
                       />
                     </div>
                     <Button type="submit" className="w-full bg-[#002B5C] hover:bg-[#001F43] text-white">
-                      متابعة للدفع
-                    </Button>
+{
+isWaiting?'جاري معالجة الدفع':'متابعة الدفع'
+
+}                    </Button>
                   </div>
                 </form>
               </CardContent>
@@ -243,7 +249,11 @@ export default function CheckoutPage() {
                   </div>
                   <Button onClick={(w) => handlePaymentSubmit(w).then(() => {
                   })} className="w-full bg-[#002B5C] hover:bg-[#001F43] text-white">
-                    دفع                  </Button>
+                    {
+isWaiting?'جاري معالجة الدفع':'متابعة الدفع'
+
+                    }
+                                      </Button>
                 </div>
               </CardContent>
               <CardFooter>
