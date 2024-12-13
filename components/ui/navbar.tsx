@@ -1,7 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 
-export function Navbar() {
+export function Navbar(props:{cart:any}) {
   return (
     <nav className="bg-white border-b">
       <div className="container mx-auto px-4">
@@ -21,8 +21,7 @@ export function Navbar() {
           </Link>
 
           <div className="flex items-center space-x-4 space-x-reverse">
-            <Link href="/about" className="text-gray-700 hover:text-gray-900">مزرعتنا</Link>
-          </div>
+{props.cart}          </div>
         </div>
       </div>
     </nav>

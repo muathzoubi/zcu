@@ -77,16 +77,18 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
-      <Navbar />
+      <Navbar cart={
+          <Link href="/checkout">   <Button onClick={handleCheckout} className="bg-[#002B5C] hover:bg-[#001F43] text-white">
+          <ShoppingCart className="ml-2" />
+          السلة ({cartItemCount})
+        </Button></Link>
+      } />
 
       <main className="container mx-auto px-4 py-12">
         <div className="flex justify-between items-center mb-12">
           <h1 className="text-4xl font-bold text-[#002B5C]">المنتجات الطازجة</h1>
 
-          <Link href="/checkout">   <Button onClick={handleCheckout} className="bg-[#002B5C] hover:bg-[#001F43] text-white">
-            <ShoppingCart className="ml-2" />
-            السلة ({cartItemCount})
-          </Button></Link>
+        
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
